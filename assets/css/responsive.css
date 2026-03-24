@@ -1,31 +1,31 @@
 @media (max-width: 639px) {
   .admission-overlay {
-    align-items: flex-end;
+    align-items: center;
     padding:
-      max(0.85rem, env(safe-area-inset-top))
-      0.85rem
-      calc(1rem + env(safe-area-inset-bottom));
+      max(1rem, env(safe-area-inset-top))
+      0.9rem
+      max(1rem, env(safe-area-inset-bottom));
   }
 
   .admission-shell {
-    width: min(92vw, 24rem);
-    max-width: 24rem;
+    width: min(94vw, 26rem);
+    max-width: 26rem;
   }
 
   .admission-card {
     border-radius: 1.55rem;
-    padding: 1.1rem 1rem 1rem;
-    max-height: min(78svh, 42rem);
+    padding: 1.2rem 1rem 1.05rem;
+    max-height: min(88svh, 46rem);
     overflow: auto;
   }
 
   .admission-card h2 {
-    font-size: clamp(1.6rem, 5.8vw, 1.95rem);
+    font-size: clamp(1.72rem, 6.4vw, 2.15rem);
   }
 
   .admission-copy {
-    font-size: 0.95rem;
-    margin-bottom: 1.05rem;
+    font-size: 1rem;
+    margin-bottom: 1.1rem;
   }
 
   .admission-kicker {
@@ -44,20 +44,24 @@
   }
 
   .admission-field span {
-    font-size: 0.78rem;
+    font-size: 0.8rem;
   }
 
   .admission-field input,
   .admission-field select,
   .admission-submit {
-    min-height: 3.45rem;
-    font-size: 1rem;
+    min-height: 3.7rem;
+    font-size: 1.02rem;
+  }
+
+  .admission-submit {
+    margin-top: 0.15rem;
   }
 
   .admission-blob {
-    width: 13.5rem;
-    left: -1.25rem;
-    bottom: -2.5rem;
+    width: 15rem;
+    left: -0.75rem;
+    bottom: -2.25rem;
   }
 }
 
