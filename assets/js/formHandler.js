@@ -101,20 +101,79 @@
     audioElement.preload = "auto";
     audioElement.autoplay = !(config.audio && config.audio.autoplay === false);
     audioElement.playsInline = true;
+    setupAudioBoost(audioElement, config);
   }
 
-  function playAudioElement(audioElement) {
+  function getAudioBoostValue(config) {
+    const boost = Number(config.audio && config.audio.gainBoost);
+
+    if (!Number.isFinite(boost) || boost <= 0) {
+      return 1;
+    }
+
+    return boost;
+  }
+
+  function setupAudioBoost(audioElement, config) {
+    const AudioContextConstructor = window.AudioContext || window.webkitAudioContext;
+    const gainBoost = getAudioBoostValue(config);
+
+    if (!audioElement || !AudioContextConstructor || gainBoost <= 1) {
+      return null;
+    }
+
+    if (audioElement.__admissionAudioState) {
+      audioElement.__admissionAudioState.gainNode.gain.value = gainBoost;
+      return audioElement.__admissionAudioState;
+    }
+
+    try {
+      const context = new AudioContextConstructor();
+      const source = context.createMediaElementSource(audioElement);
+      const gainNode = context.createGain();
+
+      gainNode.gain.value = gainBoost;
+      source.connect(gainNode);
+      gainNode.connect(context.destination);
+
+      audioElement.__admissionAudioState = {
+        context: context,
+        gainNode: gainNode,
+        source: source
+      };
+
+      return audioElement.__admissionAudioState;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function resumeAudioBoost(audioElement, config) {
+    const audioState = setupAudioBoost(audioElement, config);
+
+    if (!audioState || !audioState.context || audioState.context.state !== "suspended") {
+      return Promise.resolve();
+    }
+
+    return audioState.context.resume().catch(function () {
+      return undefined;
+    });
+  }
+
+  function playAudioElement(audioElement, config) {
     if (!audioElement) {
       return Promise.reject(new Error("Audio element not found"));
     }
 
-    const result = audioElement.play();
+    return resumeAudioBoost(audioElement, config).then(function () {
+      const result = audioElement.play();
 
-    if (result && typeof result.then === "function") {
-      return result;
-    }
+      if (result && typeof result.then === "function") {
+        return result;
+      }
 
-    return Promise.resolve();
+      return Promise.resolve();
+    });
   }
 
   function setupBackgroundAudio(audioElement, config) {
@@ -167,7 +226,7 @@
         return;
       }
 
-      playAudioElement(audioElement)
+      playAudioElement(audioElement, config)
         .then(function () {
           markUnlocked();
         })
@@ -217,7 +276,7 @@
       return;
     }
 
-    playAudioElement(audioElement).catch(function () {
+    playAudioElement(audioElement, config).catch(function () {
       playSynthWelcome(config);
     });
   }

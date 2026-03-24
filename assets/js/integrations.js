@@ -23,6 +23,7 @@
       // Best effort autoplay: some browsers still require the first user interaction.
       useFile: true,
       volume: 1,
+      gainBoost: 1.3,
       autoplay: true,
       loop: false,
       tone: [523.25, 659.25, 783.99]
