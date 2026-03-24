@@ -1,0 +1,225 @@
+:root {
+  --admission-glass: linear-gradient(160deg, rgba(255, 255, 255, 0.72), rgba(237, 244, 255, 0.48));
+  --admission-border: rgba(255, 255, 255, 0.58);
+  --admission-shadow: 0 28px 65px rgba(12, 36, 84, 0.22);
+  --admission-text: #0f1f4a;
+  --admission-muted: #5b6988;
+  --admission-accent: #1e5fd4;
+  --admission-accent-strong: #0f3f9f;
+  --admission-warm: #f97316;
+  --admission-success: #0f766e;
+}
+
+.brochure-stage {
+  position: relative;
+  width: 100%;
+}
+
+.brochure-shell {
+  position: relative;
+  z-index: 1;
+}
+
+.admission-iframe,
+.admission-audio {
+  display: none;
+}
+
+.admission-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  overflow: auto;
+  pointer-events: none;
+}
+
+.admission-shell {
+  position: relative;
+  width: min(90vw, 18.75rem);
+  pointer-events: auto;
+  isolation: isolate;
+}
+
+.admission-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  border: 1px solid var(--admission-border);
+  background: var(--admission-glass);
+  box-shadow: var(--admission-shadow);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  padding: 1.25rem;
+}
+
+.admission-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 5px;
+  background: linear-gradient(90deg, var(--admission-accent), #60a5fa, var(--admission-warm));
+}
+
+.admission-close {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.58);
+  color: var(--admission-text);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  padding: 0.42rem 0.8rem;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.admission-close:hover,
+.admission-close:focus-visible {
+  background: rgba(255, 255, 255, 0.82);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.admission-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.75rem;
+  color: var(--admission-accent);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.admission-kicker::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--admission-warm), var(--admission-accent));
+  box-shadow: 0 0 0 0.25rem rgba(96, 165, 250, 0.16);
+}
+
+.admission-card h2 {
+  margin: 0;
+  color: var(--admission-text);
+  font-family: "Raleway", sans-serif;
+  font-size: 1.45rem;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.admission-copy {
+  margin: 0.7rem 0 1rem;
+  color: var(--admission-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.admission-form {
+  display: grid;
+  gap: 0.82rem;
+}
+
+.admission-field {
+  display: grid;
+  gap: 0.38rem;
+}
+
+.admission-field span {
+  color: var(--admission-text);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.admission-field input,
+.admission-field select {
+  width: 100%;
+  min-height: 3.1rem;
+  border-radius: 0.95rem;
+  border: 1px solid rgba(16, 68, 168, 0.14);
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--admission-text);
+  font: inherit;
+  font-size: 0.95rem;
+  padding: 0.9rem 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.admission-field select {
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--admission-accent) 50%),
+    linear-gradient(135deg, var(--admission-accent) 50%, transparent 50%);
+  background-position:
+    calc(100% - 1rem) calc(50% - 0.1rem),
+    calc(100% - 0.72rem) calc(50% - 0.1rem);
+  background-size: 0.38rem 0.38rem, 0.38rem 0.38rem;
+  background-repeat: no-repeat;
+  padding-right: 2rem;
+}
+
+.admission-field input::placeholder {
+  color: rgba(91, 105, 136, 0.7);
+}
+
+.admission-field input:focus,
+.admission-field select:focus {
+  border-color: rgba(30, 95, 212, 0.46);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 0 0 0.22rem rgba(30, 95, 212, 0.16);
+}
+
+.admission-submit {
+  border: 0;
+  border-radius: 1rem;
+  min-height: 3.15rem;
+  background: linear-gradient(135deg, var(--admission-accent), var(--admission-accent-strong));
+  color: #fff;
+  font: inherit;
+  font-size: 0.96rem;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  box-shadow: 0 18px 32px rgba(16, 68, 168, 0.28);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+}
+
+.admission-submit:hover,
+.admission-submit:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 40px rgba(16, 68, 168, 0.32);
+  outline: none;
+}
+
+.admission-form.is-submitting .admission-submit {
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.admission-status {
+  margin: 0;
+  border-radius: 0.95rem;
+  background: rgba(15, 118, 110, 0.1);
+  color: var(--admission-success);
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.5;
+  padding: 0.8rem 0.9rem;
+}
+
+.admission-status[hidden] {
+  display: none;
+}

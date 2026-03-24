@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" fill="none">
+  <defs>
+    <linearGradient id="blobGradient" x1="84" y1="86" x2="520" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#60A5FA"/>
+      <stop offset="0.52" stop-color="#1E5FD4"/>
+      <stop offset="1" stop-color="#F97316"/>
+    </linearGradient>
+    <filter id="blobBlur" x="-80" y="-80" width="760" height="760" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+  </defs>
+  <g filter="url(#blobBlur)" opacity="0.88">
+    <path d="M478.895 155.326C519.018 207.394 524.303 282.729 505.049 349.415C485.861 416.1 442.07 474.203 379.47 503.786C316.804 533.303 235.594 534.236 172.06 506.585C108.593 478.934 62.534 422.566 47.819 357.414C33.171 292.263 49.799 218.328 94.123 165.594C138.514 112.86 210.68 81.1298 281.647 77.6638C352.614 74.1979 438.772 103.259 478.895 155.326Z" fill="url(#blobGradient)"/>
+  </g>
+</svg>

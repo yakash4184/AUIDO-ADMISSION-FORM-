@@ -1,0 +1,53 @@
+@media (max-width: 639px) {
+  .admission-overlay {
+    align-items: flex-start;
+    padding: 1rem 0.75rem 1.5rem;
+  }
+
+  .admission-shell {
+    width: min(90vw, 24rem);
+  }
+
+  .admission-card {
+    border-radius: 1.25rem;
+    padding: 1rem;
+  }
+
+  .admission-card h2 {
+    font-size: 1.28rem;
+  }
+
+  .admission-copy {
+    font-size: 0.86rem;
+  }
+
+  .admission-field input,
+  .admission-field select,
+  .admission-submit {
+    min-height: 3rem;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .admission-shell {
+    width: 16.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .admission-shell {
+    width: 18.75rem;
+  }
+}
+
+@media print {
+  .admission-overlay {
+    display: none !important;
+  }
+
+  .brochure-shell {
+    filter: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

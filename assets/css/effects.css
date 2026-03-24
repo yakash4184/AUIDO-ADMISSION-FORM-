@@ -1,0 +1,146 @@
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.brochure-stage {
+  perspective: 2200px;
+  transform-style: preserve-3d;
+}
+
+.brochure-shell {
+  transform-origin: center top;
+  transition: filter 0.65s ease, transform 0.85s ease, opacity 0.5s ease;
+  will-change: filter, transform;
+}
+
+.brochure-shell--blurred {
+  filter: blur(7px) saturate(0.92) brightness(0.98);
+}
+
+.brochure-shell.is-ready {
+  animation: brochureFlipIn 1.05s cubic-bezier(0.2, 0.8, 0.18, 1) both;
+}
+
+.admission-overlay {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.45s ease, visibility 0.45s ease;
+}
+
+.admission-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 18%, rgba(96, 165, 250, 0.14), transparent 34%),
+    radial-gradient(circle at 78% 24%, rgba(249, 115, 22, 0.08), transparent 30%),
+    radial-gradient(circle at 50% 80%, rgba(14, 165, 233, 0.08), transparent 28%);
+  z-index: 0;
+}
+
+.admission-overlay.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.admission-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: opacity 0.4s ease, transform 0.45s ease;
+}
+
+.admission-overlay.is-ready .admission-card {
+  animation: admissionCardIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.admission-overlay.is-hidden .admission-card {
+  opacity: 0;
+  transform: translateY(1rem) scale(0.96);
+}
+
+.admission-particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.9;
+}
+
+.admission-blob {
+  position: absolute;
+  width: 12rem;
+  left: -2.4rem;
+  bottom: -2rem;
+  z-index: -1;
+  opacity: 0.88;
+  filter: blur(1px);
+  transform-origin: center;
+  animation: blobFloat 10s ease-in-out infinite;
+}
+
+@keyframes brochureFlipIn {
+  0% {
+    opacity: 0;
+    transform: rotateX(7deg) rotateY(-8deg) scale(0.96);
+  }
+
+  100% {
+    opacity: 1;
+    transform: rotateX(0deg) rotateY(0deg) scale(1);
+  }
+}
+
+@keyframes brochureFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes admissionCardIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.92);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes blobFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: translate3d(0.6rem, -0.9rem, 0) rotate(8deg) scale(1.05);
+  }
+}
+
+@supports not (transform-style: preserve-3d) {
+  .brochure-shell.is-ready {
+    animation: brochureFadeIn 0.8s ease both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brochure-shell,
+  .admission-overlay,
+  .admission-card,
+  .admission-close,
+  .admission-submit,
+  .admission-blob {
+    animation: none !important;
+    transition: none !important;
+  }
+}
