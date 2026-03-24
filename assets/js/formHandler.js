@@ -9,20 +9,6 @@
     });
   }
 
-  function buildWhatsAppUrl(config, data) {
-    const whatsapp = config.whatsapp || {};
-    const template =
-      whatsapp.template ||
-      "Namaste, I am {name}. I have submitted an admission enquiry for {className}.";
-
-    const message = template
-      .replace("{name}", data.name)
-      .replace("{className}", data.className)
-      .replace("{mobile}", data.mobile);
-
-    return (whatsapp.baseUrl || "https://wa.me/918400585469") + "?text=" + encodeURIComponent(message);
-  }
-
   function normalizeClassValue(className) {
     const value = String(className || "").trim();
 
@@ -329,10 +315,9 @@
       submitToGoogleForm(form, config, data);
 
       status.hidden = false;
-      status.textContent = "Thank you. Opening WhatsApp and returning you to the brochure.";
+      status.textContent = "Thank you. Your admission enquiry has been submitted.";
 
       playWelcomeSound(audioElement, config);
-      window.open(buildWhatsAppUrl(config, data), "_blank", "noopener,noreferrer");
       form.reset();
 
       window.setTimeout(function () {
