@@ -1,4 +1,6 @@
+html,
 body {
+  width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -6,6 +8,7 @@ body {
 .brochure-stage {
   perspective: 2200px;
   transform-style: preserve-3d;
+  overflow: hidden;
 }
 
 .brochure-shell {

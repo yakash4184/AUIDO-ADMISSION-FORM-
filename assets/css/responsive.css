@@ -64,7 +64,11 @@
   }
 
   .brochure-shell,
-  .brochure-shell.is-ready,
+  .brochure-shell.is-ready {
+    animation: none !important;
+    transition: none !important;
+  }
+
   .admission-card,
   .admission-overlay.is-ready .admission-card {
     animation: none !important;

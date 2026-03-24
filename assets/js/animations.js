@@ -1,5 +1,6 @@
 (function () {
   let overlay;
+  let brochureStage;
   let brochureShell;
   let particleCanvas;
   let particleContext;
@@ -14,6 +15,42 @@
 
   function isMobileLayout() {
     return mobileQuery.matches;
+  }
+
+  function fitBrochureForViewport() {
+    if (!brochureShell || !brochureStage) {
+      return;
+    }
+
+    const firstPage = brochureShell.querySelector(".page");
+
+    if (!firstPage) {
+      return;
+    }
+
+    if (!isMobileLayout()) {
+      brochureStage.style.minHeight = "";
+      brochureShell.style.position = "";
+      brochureShell.style.top = "";
+      brochureShell.style.left = "";
+      brochureShell.style.width = "";
+      brochureShell.style.transform = "";
+      brochureShell.style.transformOrigin = "";
+      return;
+    }
+
+    const pageWidth = firstPage.offsetWidth;
+    const shellHeight = brochureShell.scrollHeight;
+    const viewportWidth = Math.max(320, window.innerWidth - 8);
+    const scale = Math.min(1, viewportWidth / pageWidth);
+
+    brochureStage.style.minHeight = Math.round(shellHeight * scale) + "px";
+    brochureShell.style.position = "absolute";
+    brochureShell.style.top = "0";
+    brochureShell.style.left = "50%";
+    brochureShell.style.width = pageWidth + "px";
+    brochureShell.style.transformOrigin = "top center";
+    brochureShell.style.transform = "translateX(-50%) scale(" + scale + ")";
   }
 
   function resizeCanvas() {
@@ -158,6 +195,8 @@
   }
 
   function handleResize() {
+    fitBrochureForViewport();
+
     if (!particleCanvas || prefersReducedMotion() || isMobileLayout()) {
       return;
     }
@@ -168,6 +207,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     overlay = document.getElementById("admissionOverlay");
+    brochureStage = document.querySelector(".brochure-stage");
     brochureShell = document.getElementById("brochureShell");
     particleCanvas = document.getElementById("admissionParticles");
 
@@ -181,6 +221,7 @@
       }
     });
 
+    fitBrochureForViewport();
     startParticles();
     window.addEventListener("resize", handleResize, { passive: true });
 
@@ -196,6 +237,8 @@
 
     if (typeof mobileQuery.addEventListener === "function") {
       mobileQuery.addEventListener("change", function () {
+        fitBrochureForViewport();
+
         if (isMobileLayout()) {
           stopParticles();
         } else {
