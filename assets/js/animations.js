@@ -6,9 +6,14 @@
   let particles = [];
   let frameId = 0;
   const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const mobileQuery = window.matchMedia("(max-width: 639px)");
 
   function prefersReducedMotion() {
     return reducedMotionQuery.matches;
+  }
+
+  function isMobileLayout() {
+    return mobileQuery.matches;
   }
 
   function resizeCanvas() {
@@ -87,7 +92,7 @@
   }
 
   function animateParticles() {
-    if (!overlay || overlay.classList.contains("is-hidden") || prefersReducedMotion()) {
+    if (!overlay || overlay.classList.contains("is-hidden") || prefersReducedMotion() || isMobileLayout()) {
       frameId = 0;
       return;
     }
@@ -97,7 +102,7 @@
   }
 
   function startParticles() {
-    if (!particleCanvas || prefersReducedMotion()) {
+    if (!particleCanvas || prefersReducedMotion() || isMobileLayout()) {
       return;
     }
 
@@ -153,7 +158,7 @@
   }
 
   function handleResize() {
-    if (!particleCanvas || prefersReducedMotion()) {
+    if (!particleCanvas || prefersReducedMotion() || isMobileLayout()) {
       return;
     }
 
@@ -182,6 +187,16 @@
     if (typeof reducedMotionQuery.addEventListener === "function") {
       reducedMotionQuery.addEventListener("change", function () {
         if (prefersReducedMotion()) {
+          stopParticles();
+        } else {
+          startParticles();
+        }
+      });
+    }
+
+    if (typeof mobileQuery.addEventListener === "function") {
+      mobileQuery.addEventListener("change", function () {
+        if (isMobileLayout()) {
           stopParticles();
         } else {
           startParticles();
